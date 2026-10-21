@@ -34,16 +34,31 @@ class FieldPickerView extends WatchUi.View {
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         dc.clear();
 
-        // Title, and under it the details chosen in the previous step (e.g. the date) in blue
+        // Title, and under it the details chosen in the previous step (e.g. the date) in blue.
+        // Each uses the largest font that fits within the width of the round screen near the top.
+        var textW = w * 66 / 100;
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(w / 2, h * 9 / 100, Graphics.FONT_SMALL, _title, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(w / 2, h * 9 / 100, fitFont(dc, _title, textW, [Graphics.FONT_TINY, Graphics.FONT_XTINY]),
+            _title, Graphics.TEXT_JUSTIFY_CENTER);
         if (_subtitle != null) {
             dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_TRANSPARENT);
-            dc.drawText(w / 2, h * 21 / 100, Graphics.FONT_SMALL, _subtitle as String, Graphics.TEXT_JUSTIFY_CENTER);
+            dc.drawText(w / 2, h * 20 / 100, fitFont(dc, _subtitle as String, textW,
+                [Graphics.FONT_TINY, Graphics.FONT_XTINY]), _subtitle as String, Graphics.TEXT_JUSTIFY_CENTER);
         }
 
-        // Fields side by side; the highlighted one is white with arrows above and below
-        var font = Graphics.FONT_LARGE;
+        // Fields side by side; the highlighted one is white with arrows above and below. One font for all fields:
+        // the largest whose widest label fits its column.
+        var colW = w * 70 / 100 / _labels.size();
+        var widest = "";
+        for (var i = 0; i < _labels.size(); i++) {
+            var list = _labels[i] as Array<String>;
+            for (var j = 0; j < list.size(); j++) {
+                if (list[j].length() > widest.length()) {
+                    widest = list[j];
+                }
+            }
+        }
+        var font = fitFont(dc, widest, colW - 6, [Graphics.FONT_MEDIUM, Graphics.FONT_SMALL, Graphics.FONT_TINY]);
         var fontH = dc.getFontHeight(font);
         var cy = h * 55 / 100;
         for (var i = 0; i < _labels.size(); i++) {
@@ -80,6 +95,16 @@ class FieldPickerView extends WatchUi.View {
         dc.drawLine(x - s, y, x - s / 3, y + s * 2 / 3);
         dc.drawLine(x - s / 3, y + s * 2 / 3, x + s, y - s * 2 / 3);
         dc.setPenWidth(1);
+    }
+
+    // The first font of `fonts` (largest first) in which `text` is at most `maxW` wide; the last one if none fit
+    private function fitFont(dc as Dc, text as String, maxW as Number, fonts as Array<FontType>) as FontType {
+        for (var i = 0; i < fonts.size() - 1; i++) {
+            if (dc.getTextWidthInPixels(text, fonts[i]) <= maxW) {
+                return fonts[i];
+            }
+        }
+        return fonts[fonts.size() - 1];
     }
 
     // Centre x of field i: the fields share the middle 70% of the screen width
