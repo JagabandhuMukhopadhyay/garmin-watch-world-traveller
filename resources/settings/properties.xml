@@ -1,0 +1,20 @@
+<properties>
+    <property id="StartAlarmMin" type="number">0</property>
+    <property id="Change1AlarmMin" type="number">0</property>
+    <property id="Change2AlarmMin" type="number">0</property>
+    <property id="PlaneChanges" type="number">1</property>
+    <property id="Change2Label" type="string">Change 2</property>
+    <property id="Change2Offset" type="number">60</property>
+    <property id="Change2Boarding" type="string"></property>
+    <property id="Change2FlightMin" type="number">480</property>
+    <property id="StartFlightMin" type="number">480</property>
+    <property id="Change1FlightMin" type="number">540</property>
+    <property id="FocusIndex" type="number">0</property>
+    <property id="StartLabel" type="string">Bangalore</property>
+    <property id="StartBoarding" type="string"></property>
+    <property id="Change1Label" type="string">Frankfurt</property>
+    <property id="Change1Offset" type="number">120</property>
+    <property id="Change1Boarding" type="string"></property>
+    <property id="DestLabel" type="string">New York</property>
+    <property id="DestOffset" type="number">-240</property>
+</properties>

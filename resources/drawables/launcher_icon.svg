@@ -1,0 +1,27 @@
+<svg width="65" height="65" viewBox="0 0 65 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="globe">
+      <circle cx="32.5" cy="32.5" r="25"/>
+    </clipPath>
+  </defs>
+
+  <!-- black background (AMOLED) -->
+  <rect width="65" height="65" fill="#000000"/>
+
+  <!-- globe -->
+  <circle cx="32.5" cy="32.5" r="25" fill="#0B3D91"/>
+  <g clip-path="url(#globe)" stroke="#4FA3FF" stroke-width="1.5" fill="none">
+    <ellipse cx="32.5" cy="32.5" rx="11" ry="25"/>
+    <line x1="32.5" y1="7.5" x2="32.5" y2="57.5"/>
+    <line x1="7.5" y1="32.5" x2="57.5" y2="32.5"/>
+    <path d="M9 21 Q32.5 27 56 21"/>
+    <path d="M9 44 Q32.5 50 56 44"/>
+  </g>
+  <circle cx="32.5" cy="32.5" r="25" stroke="#4FA3FF" stroke-width="2"/>
+
+  <!-- aeroplane crossing the globe -->
+  <g transform="translate(40 24) rotate(-40) scale(14)">
+    <polygon fill="#FF9F1C" stroke="#000000" stroke-width="0.12"
+      points="1,0 0.35,-0.18 -0.05,-0.95 -0.30,-0.95 -0.05,-0.15 -0.65,-0.12 -0.85,-0.45 -1,-0.45 -0.95,0 -1,0.45 -0.85,0.45 -0.65,0.12 -0.05,0.15 -0.30,0.95 -0.05,0.95 0.35,0.18"/>
+  </g>
+</svg>

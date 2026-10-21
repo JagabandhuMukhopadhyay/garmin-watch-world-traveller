@@ -1,0 +1,62 @@
+<strings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://developer.garmin.com/downloads/connect-iq/resources.xsd">
+    <string id="AppName">World Traveller</string>
+    <string id="StartFlightTitle">Origin flight time (minutes)</string>
+    <string id="Change1FlightTitle">Change 1 flight time (minutes)</string>
+    <string id="StartAlarmTitle">Origin: alarm minutes before boarding (0 = off)</string>
+    <string id="Change1AlarmTitle">Change 1: alarm minutes before boarding (0 = off)</string>
+    <string id="Change2AlarmTitle">Change 2: alarm minutes before boarding (0 = off)</string>
+    <string id="PlaneChangesTitle">Plane changes</string>
+    <string id="OnePlaneChange">1 plane change (Origin, Change 1, Destination)</string>
+    <string id="TwoPlaneChanges">2 plane changes (adds Change 2)</string>
+    <string id="Change2LabelTitle">Change 2: label</string>
+    <string id="Change2OffsetTitle">Change 2: time zone</string>
+    <string id="Change2BoardingTitle">Change 2: boarding (YYYY-MM-DD HH:MM, local)</string>
+    <string id="Change2FlightTitle">Change 2 flight time (minutes)</string>
+    <string id="FocusTitle">Focus (shown large in the middle)</string>
+    <string id="FocusOrigin">Origin</string>
+    <string id="FocusChange1">Change 1</string>
+    <string id="FocusChange2">Change 2 (two plane changes only)</string>
+    <string id="FocusDestination">Destination</string>
+    <string id="StartLabelTitle">Origin: label (time is the watch's local time)</string>
+    <string id="StartBoardingTitle">Origin: boarding (YYYY-MM-DD HH:MM, local)</string>
+    <string id="Change1LabelTitle">Change 1: label</string>
+    <string id="Change1OffsetTitle">Change 1: time zone</string>
+    <string id="Change1BoardingTitle">Change 1: boarding (YYYY-MM-DD HH:MM, local)</string>
+    <string id="DestLabelTitle">Destination: label</string>
+    <string id="DestOffsetTitle">Destination: time zone</string>
+
+    <!-- Time zone choices. Pick the entry whose UTC offset applies on the travel date (DST included). -->
+    <string id="TzM720">UTC-12:00 Baker Island</string>
+    <string id="TzM660">UTC-11:00 Pago Pago, Midway</string>
+    <string id="TzM600">UTC-10:00 Honolulu</string>
+    <string id="TzM540">UTC-09:00 Anchorage</string>
+    <string id="TzM480">UTC-08:00 Los Angeles, Vancouver</string>
+    <string id="TzM420">UTC-07:00 Denver, Phoenix</string>
+    <string id="TzM360">UTC-06:00 Chicago, Mexico City</string>
+    <string id="TzM300">UTC-05:00 New York (winter), Toronto, Bogota</string>
+    <string id="TzM240">UTC-04:00 New York (summer), Halifax, Caracas</string>
+    <string id="TzM210">UTC-03:30 St. John's</string>
+    <string id="TzM180">UTC-03:00 Sao Paulo, Buenos Aires</string>
+    <string id="TzM120">UTC-02:00 South Georgia</string>
+    <string id="TzM60">UTC-01:00 Azores, Cape Verde</string>
+    <string id="TzP0">UTC+00:00 London (winter), Reykjavik, Accra</string>
+    <string id="TzP60">UTC+01:00 Frankfurt (winter), Paris, Berlin, London (summer)</string>
+    <string id="TzP120">UTC+02:00 Frankfurt (summer), Athens, Cairo</string>
+    <string id="TzP180">UTC+03:00 Moscow, Istanbul, Riyadh, Nairobi</string>
+    <string id="TzP210">UTC+03:30 Tehran</string>
+    <string id="TzP240">UTC+04:00 Dubai, Baku</string>
+    <string id="TzP270">UTC+04:30 Kabul</string>
+    <string id="TzP300">UTC+05:00 Karachi, Tashkent</string>
+    <string id="TzP330">UTC+05:30 India, Sri Lanka</string>
+    <string id="TzP345">UTC+05:45 Kathmandu</string>
+    <string id="TzP360">UTC+06:00 Dhaka, Almaty</string>
+    <string id="TzP390">UTC+06:30 Yangon</string>
+    <string id="TzP420">UTC+07:00 Bangkok, Jakarta, Hanoi</string>
+    <string id="TzP480">UTC+08:00 Singapore, Hong Kong, Beijing, Perth</string>
+    <string id="TzP540">UTC+09:00 Tokyo, Seoul</string>
+    <string id="TzP570">UTC+09:30 Adelaide, Darwin</string>
+    <string id="TzP600">UTC+10:00 Sydney (winter), Brisbane</string>
+    <string id="TzP660">UTC+11:00 Sydney (summer), Noumea</string>
+    <string id="TzP720">UTC+12:00 Auckland (winter), Fiji</string>
+    <string id="TzP780">UTC+13:00 Auckland (summer), Tonga</string>
+</strings>

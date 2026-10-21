@@ -1,0 +1,166 @@
+<settings>
+    <setting propertyKey="@Properties.StartAlarmMin" title="@Strings.StartAlarmTitle">
+        <settingConfig type="numeric" min="0" max="600" />
+    </setting>
+    <setting propertyKey="@Properties.Change1AlarmMin" title="@Strings.Change1AlarmTitle">
+        <settingConfig type="numeric" min="0" max="600" />
+    </setting>
+    <setting propertyKey="@Properties.Change2AlarmMin" title="@Strings.Change2AlarmTitle">
+        <settingConfig type="numeric" min="0" max="600" />
+    </setting>
+    <setting propertyKey="@Properties.PlaneChanges" title="@Strings.PlaneChangesTitle">
+        <settingConfig type="list">
+            <listEntry value="1">@Strings.OnePlaneChange</listEntry>
+            <listEntry value="2">@Strings.TwoPlaneChanges</listEntry>
+        </settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.Change2Label" title="@Strings.Change2LabelTitle">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+    <setting propertyKey="@Properties.Change2Offset" title="@Strings.Change2OffsetTitle">
+        <settingConfig type="list">
+            <listEntry value="-720">@Strings.TzM720</listEntry>
+            <listEntry value="-660">@Strings.TzM660</listEntry>
+            <listEntry value="-600">@Strings.TzM600</listEntry>
+            <listEntry value="-540">@Strings.TzM540</listEntry>
+            <listEntry value="-480">@Strings.TzM480</listEntry>
+            <listEntry value="-420">@Strings.TzM420</listEntry>
+            <listEntry value="-360">@Strings.TzM360</listEntry>
+            <listEntry value="-300">@Strings.TzM300</listEntry>
+            <listEntry value="-240">@Strings.TzM240</listEntry>
+            <listEntry value="-210">@Strings.TzM210</listEntry>
+            <listEntry value="-180">@Strings.TzM180</listEntry>
+            <listEntry value="-120">@Strings.TzM120</listEntry>
+            <listEntry value="-60">@Strings.TzM60</listEntry>
+            <listEntry value="0">@Strings.TzP0</listEntry>
+            <listEntry value="60">@Strings.TzP60</listEntry>
+            <listEntry value="120">@Strings.TzP120</listEntry>
+            <listEntry value="180">@Strings.TzP180</listEntry>
+            <listEntry value="210">@Strings.TzP210</listEntry>
+            <listEntry value="240">@Strings.TzP240</listEntry>
+            <listEntry value="270">@Strings.TzP270</listEntry>
+            <listEntry value="300">@Strings.TzP300</listEntry>
+            <listEntry value="330">@Strings.TzP330</listEntry>
+            <listEntry value="345">@Strings.TzP345</listEntry>
+            <listEntry value="360">@Strings.TzP360</listEntry>
+            <listEntry value="390">@Strings.TzP390</listEntry>
+            <listEntry value="420">@Strings.TzP420</listEntry>
+            <listEntry value="480">@Strings.TzP480</listEntry>
+            <listEntry value="540">@Strings.TzP540</listEntry>
+            <listEntry value="570">@Strings.TzP570</listEntry>
+            <listEntry value="600">@Strings.TzP600</listEntry>
+            <listEntry value="660">@Strings.TzP660</listEntry>
+            <listEntry value="720">@Strings.TzP720</listEntry>
+            <listEntry value="780">@Strings.TzP780</listEntry>
+        </settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.Change2Boarding" title="@Strings.Change2BoardingTitle">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+    <setting propertyKey="@Properties.Change2FlightMin" title="@Strings.Change2FlightTitle">
+        <settingConfig type="numeric" min="0" max="1440" />
+    </setting>
+    <setting propertyKey="@Properties.StartFlightMin" title="@Strings.StartFlightTitle">
+        <settingConfig type="numeric" min="0" max="1440" />
+    </setting>
+    <setting propertyKey="@Properties.Change1FlightMin" title="@Strings.Change1FlightTitle">
+        <settingConfig type="numeric" min="0" max="1440" />
+    </setting>
+    <setting propertyKey="@Properties.FocusIndex" title="@Strings.FocusTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.FocusOrigin</listEntry>
+            <listEntry value="1">@Strings.FocusChange1</listEntry>
+            <listEntry value="2">@Strings.FocusChange2</listEntry>
+            <listEntry value="3">@Strings.FocusDestination</listEntry>
+        </settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.StartLabel" title="@Strings.StartLabelTitle">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+    <setting propertyKey="@Properties.StartBoarding" title="@Strings.StartBoardingTitle">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+    <setting propertyKey="@Properties.Change1Label" title="@Strings.Change1LabelTitle">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+    <setting propertyKey="@Properties.Change1Offset" title="@Strings.Change1OffsetTitle">
+        <settingConfig type="list">
+            <listEntry value="-720">@Strings.TzM720</listEntry>
+            <listEntry value="-660">@Strings.TzM660</listEntry>
+            <listEntry value="-600">@Strings.TzM600</listEntry>
+            <listEntry value="-540">@Strings.TzM540</listEntry>
+            <listEntry value="-480">@Strings.TzM480</listEntry>
+            <listEntry value="-420">@Strings.TzM420</listEntry>
+            <listEntry value="-360">@Strings.TzM360</listEntry>
+            <listEntry value="-300">@Strings.TzM300</listEntry>
+            <listEntry value="-240">@Strings.TzM240</listEntry>
+            <listEntry value="-210">@Strings.TzM210</listEntry>
+            <listEntry value="-180">@Strings.TzM180</listEntry>
+            <listEntry value="-120">@Strings.TzM120</listEntry>
+            <listEntry value="-60">@Strings.TzM60</listEntry>
+            <listEntry value="0">@Strings.TzP0</listEntry>
+            <listEntry value="60">@Strings.TzP60</listEntry>
+            <listEntry value="120">@Strings.TzP120</listEntry>
+            <listEntry value="180">@Strings.TzP180</listEntry>
+            <listEntry value="210">@Strings.TzP210</listEntry>
+            <listEntry value="240">@Strings.TzP240</listEntry>
+            <listEntry value="270">@Strings.TzP270</listEntry>
+            <listEntry value="300">@Strings.TzP300</listEntry>
+            <listEntry value="330">@Strings.TzP330</listEntry>
+            <listEntry value="345">@Strings.TzP345</listEntry>
+            <listEntry value="360">@Strings.TzP360</listEntry>
+            <listEntry value="390">@Strings.TzP390</listEntry>
+            <listEntry value="420">@Strings.TzP420</listEntry>
+            <listEntry value="480">@Strings.TzP480</listEntry>
+            <listEntry value="540">@Strings.TzP540</listEntry>
+            <listEntry value="570">@Strings.TzP570</listEntry>
+            <listEntry value="600">@Strings.TzP600</listEntry>
+            <listEntry value="660">@Strings.TzP660</listEntry>
+            <listEntry value="720">@Strings.TzP720</listEntry>
+            <listEntry value="780">@Strings.TzP780</listEntry>
+        </settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.Change1Boarding" title="@Strings.Change1BoardingTitle">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+    <setting propertyKey="@Properties.DestLabel" title="@Strings.DestLabelTitle">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+    <setting propertyKey="@Properties.DestOffset" title="@Strings.DestOffsetTitle">
+        <settingConfig type="list">
+            <listEntry value="-720">@Strings.TzM720</listEntry>
+            <listEntry value="-660">@Strings.TzM660</listEntry>
+            <listEntry value="-600">@Strings.TzM600</listEntry>
+            <listEntry value="-540">@Strings.TzM540</listEntry>
+            <listEntry value="-480">@Strings.TzM480</listEntry>
+            <listEntry value="-420">@Strings.TzM420</listEntry>
+            <listEntry value="-360">@Strings.TzM360</listEntry>
+            <listEntry value="-300">@Strings.TzM300</listEntry>
+            <listEntry value="-240">@Strings.TzM240</listEntry>
+            <listEntry value="-210">@Strings.TzM210</listEntry>
+            <listEntry value="-180">@Strings.TzM180</listEntry>
+            <listEntry value="-120">@Strings.TzM120</listEntry>
+            <listEntry value="-60">@Strings.TzM60</listEntry>
+            <listEntry value="0">@Strings.TzP0</listEntry>
+            <listEntry value="60">@Strings.TzP60</listEntry>
+            <listEntry value="120">@Strings.TzP120</listEntry>
+            <listEntry value="180">@Strings.TzP180</listEntry>
+            <listEntry value="210">@Strings.TzP210</listEntry>
+            <listEntry value="240">@Strings.TzP240</listEntry>
+            <listEntry value="270">@Strings.TzP270</listEntry>
+            <listEntry value="300">@Strings.TzP300</listEntry>
+            <listEntry value="330">@Strings.TzP330</listEntry>
+            <listEntry value="345">@Strings.TzP345</listEntry>
+            <listEntry value="360">@Strings.TzP360</listEntry>
+            <listEntry value="390">@Strings.TzP390</listEntry>
+            <listEntry value="420">@Strings.TzP420</listEntry>
+            <listEntry value="480">@Strings.TzP480</listEntry>
+            <listEntry value="540">@Strings.TzP540</listEntry>
+            <listEntry value="570">@Strings.TzP570</listEntry>
+            <listEntry value="600">@Strings.TzP600</listEntry>
+            <listEntry value="660">@Strings.TzP660</listEntry>
+            <listEntry value="720">@Strings.TzP720</listEntry>
+            <listEntry value="780">@Strings.TzP780</listEntry>
+        </settingConfig>
+    </setting>
+</settings>

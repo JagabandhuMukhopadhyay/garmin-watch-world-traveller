@@ -1,0 +1,11 @@
+# Connect IQ build output
+bin/
+gen/
+mir/
+internal-mir/
+*.prg
+*.prg.debug.xml
+
+# Signing key: never commit
+developer_key
+*.der
