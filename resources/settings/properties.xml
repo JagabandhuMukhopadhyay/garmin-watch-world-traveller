@@ -8,13 +8,17 @@
     <property id="Change2Boarding" type="string"></property>
     <property id="Change2FlightMin" type="number">480</property>
     <property id="StartFlightMin" type="number">480</property>
-    <property id="Change1FlightMin" type="number">540</property>
+    <property id="Change1FlightMin" type="number">600</property>
     <property id="FocusIndex" type="number">0</property>
-    <property id="StartLabel" type="string">Bangalore</property>
+    <property id="StartLabel" type="string">Bengaluru</property>
     <property id="StartBoarding" type="string"></property>
     <property id="Change1Label" type="string">Frankfurt</property>
     <property id="Change1Offset" type="number">120</property>
     <property id="Change1Boarding" type="string"></property>
-    <property id="DestLabel" type="string">New York</property>
-    <property id="DestOffset" type="number">-240</property>
+    <property id="DestLabel" type="string">San Francisco</property>
+    <property id="DestOffset" type="number">-420</property>
+    <property id="StartCode" type="string">BLR</property>
+    <property id="Change1Code" type="string">FRA</property>
+    <property id="Change2Code" type="string"></property>
+    <property id="DestCode" type="string">SFO</property>
 </properties>

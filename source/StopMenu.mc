@@ -32,7 +32,7 @@ module StopMenu {
         if (Stops.OFFSET_KEYS[stop] != null) {
             menu.addItem(new WatchUi.MenuItem("Time zone", offsetText(Stops.offsetMin(stop)), :zone, {}));
         }
-        menu.addItem(new WatchUi.MenuItem("Airport name", Stops.label(stop), :name, {}));
+        menu.addItem(new WatchUi.MenuItem("Airport ID", Stops.code(stop).length() > 0 ? Stops.code(stop) : "not set", :code, {}));
         if (Stops.BOARDING_KEYS[stop] != null) {
             var boarding = Stops.getString(Stops.BOARDING_KEYS[stop] as String, "");
             menu.addItem(new WatchUi.MenuItem("Boarding time", boarding.length() >= 16 ? boarding : "not set", :boarding, {}));
@@ -167,9 +167,8 @@ class StopMenuDelegate extends WatchUi.Menu2InputDelegate {
             pushJourneyMenu();
         } else if (id == :zone) {
             pushZoneMenu();
-        } else if (id == :name) {
-            // Garmin's own text entry screen: abc/def/... keys, UP/DOWN switch between letters, numbers and symbols
-            WatchUi.pushView(new WatchUi.TextPicker(Stops.label(_stop)), new AirportNameDelegate(_stop), WatchUi.SLIDE_UP);
+        } else if (id == :code) {
+            pushAirportLetterPicker();
         } else if (id == :boarding) {
             pushBoardingPicker();
         } else if (id == :alarm) {
@@ -181,6 +180,21 @@ class StopMenuDelegate extends WatchUi.Menu2InputDelegate {
             Stops.setFlightStart(_stop, Stops.flightStart(_stop) == null ? Time.now().value() : null);
             StopMenu.closeAll(1);
         }
+    }
+
+    // Airport ID: pick the first letter, then the airport from the (short) list of codes starting with it
+    private function pushAirportLetterPicker() as Void {
+        var letters = [] as Array<String>;
+        var values = [] as Array<Number>;
+        for (var i = 0; i < 26; i++) {
+            letters.add(("ABCDEFGHIJKLMNOPQRSTUVWXYZ").substring(i, i + 1) as String);
+            values.add(i);
+        }
+        var code = Stops.code(_stop);
+        var first = code.length() > 0 ? code.toUpper().toCharArray()[0].toNumber() - 65 : 0;
+        StopMenu.showFields("Airport ID", "First letter", [letters] as Array<Array<String> >,
+            [values] as Array<Array<Number> >, [first >= 0 && first < 26 ? first : 0] as Array<Number>, [],
+            new AirportLetterHandler(_stop), false);
     }
 
     private function pushJourneyMenu() as Void {
@@ -299,26 +313,22 @@ class ZoneMenuDelegate extends WatchUi.Menu2InputDelegate {
     }
 }
 
-// Result of Garmin's text entry screen: saves the name for this city
-class AirportNameDelegate extends WatchUi.TextPickerDelegate {
+// Airport ID entry, step 1: first letter of the IATA code. Replaces the picker with the list for that letter.
+class AirportLetterHandler {
 
     private var _stop as Number;
 
     function initialize(stop as Number) {
-        TextPickerDelegate.initialize();
         _stop = stop;
     }
 
-    function onTextEntered(text as String, changed as Boolean) as Boolean {
-        if (changed && text.length() > 0) {
-            Application.Properties.setValue(Stops.LABEL_KEYS[_stop] as String, text);
-        }
-        StopMenu.closeAll(1);   // the text screen closes itself; also close the stop menu beneath it
-        return true;
+    function onAccept(values as Array<Number>) as Void {
+        var view = new AirportListView(values[0], Stops.code(_stop));
+        WatchUi.switchToView(view, new AirportListInputDelegate(view, _stop), WatchUi.SLIDE_LEFT);
     }
 
-    function onCancel() as Boolean {
-        return true;
+    function onCancel() as Void {
+        WatchUi.popView(WatchUi.SLIDE_DOWN);
     }
 }
 

@@ -10,10 +10,6 @@ import Toybox.WatchUi;
 
 class JagaGarmin1View extends WatchUi.View {
 
-    // Placeholders used until a boarding time is entered
-    private const ORIGIN_DEFAULT_AHEAD_HOURS = 3;   // Origin boards this long after "now"
-    private const LAYOVER_HOURS = 2;                // Change 1 boards this long after the flight from Origin lands
-
     // Kept from the watch-face version: dimmed colours are only used if this is ever set (watch apps never sleep-dim)
     private var _lowPower as Boolean = false;
 
@@ -55,7 +51,7 @@ class JagaGarmin1View extends WatchUi.View {
         }
         Alarms.markFired(slot);
         _alertLine = "Boarding in " + Alarms.leadMinutes(slot) + " min";
-        _alertCity = Stops.label(slot);
+        _alertCity = Stops.display(slot);
         _alertUntil = now + 60;
 
         if (Attention has :vibrate) {
@@ -154,7 +150,7 @@ class JagaGarmin1View extends WatchUi.View {
             // The side lines (name, and "h:mma") must also fit the width of the round screen near the top/bottom
             var widest = dc.getTextWidthInPixels("12:00p", otherFont);
             for (var i = 0; i < count; i++) {
-                var w = dc.getTextWidthInPixels(Stops.getString((rows[i] as Array)[1] as String, ""), labelFont);
+                var w = dc.getTextWidthInPixels(Stops.display((rows[i] as Array)[0] as Number), labelFont);
                 widest = w > widest ? w : widest;
             }
             // The Flown / Remaining rings sit either side of the big time, so the time must be narrow enough
@@ -177,24 +173,11 @@ class JagaGarmin1View extends WatchUi.View {
             offsets.add(Stops.offsetMin((rows[i] as Array)[0] as Number));
         }
 
-        // Effective boarding string per stop. Where none is set, fill in a placeholder:
-        // Origin = now + 3h; Change 1 = Origin's boarding + flight + layover (in Change 1's local time).
+        // Boarding string per stop exactly as entered ("" = not set: no BRD / RCH shown for that airport)
         var boardings = [] as Array<String>;
         for (var i = 0; i < rows.size(); i++) {
             var key = (rows[i] as Array)[3];
-            var s = key == null ? "" : Stops.getString(key as String, "");
-            if (s.length() < 16 && key != null) {
-                if (i == 0) {
-                    s = Stops.stringFromLocal(nowUtc + offsets[0] * 60 + ORIGIN_DEFAULT_AHEAD_HOURS * 3600);
-                } else {
-                    var prev = Stops.parseBoarding(boardings[i - 1]);
-                    if (prev != null) {
-                        s = Stops.stringFromLocal(prev - offsets[i - 1] * 60
-                            + (Stops.flightMinutes((rows[i - 1] as Array)[0] as Number) + LAYOVER_HOURS * 60) * 60 + offsets[i] * 60);
-                    }
-                }
-            }
-            boardings.add(s);
+            boardings.add(key == null ? "" : Stops.getString(key as String, ""));
         }
 
         var y = margin;
@@ -218,13 +201,17 @@ class JagaGarmin1View extends WatchUi.View {
                 legStart = Stops.flightStart(slotId);
                 legMinutes = Stops.flightMinutes(slotId);
             }
-            drawRow(dc, width / 2, y, labelFont, isFocus ? focusFont : otherFont, isFocus, nowUtc,
-                Stops.getString(row[1] as String, ""),
-                Stops.tagFor(i, count), tagFont,
-                offsets[i], nextOffset, isDest ? "" : boardings[i], Stops.flightMinutes(slotId), legStart, legMinutes);
+            // With the Origin in focus there is nothing above it (the ring would show DEST there)
+            var blankTop = (pos == 0 && focus == 0);
+            if (!blankTop) {
+                drawRow(dc, width / 2, y, labelFont, isFocus ? focusFont : otherFont, isFocus, nowUtc,
+                    Stops.display(slotId),
+                    Stops.tagFor(i, count), tagFont,
+                    offsets[i], nextOffset, isDest ? "" : boardings[i], Stops.flightMinutes(slotId), legStart, legMinutes);
+            }
 
             // Separator line between this block and the next
-            if (pos < blocks - 1) {
+            if (pos < blocks - 1 && !blankTop) {
                 var lineY = y + blockH + gap / 2;
                 dc.setColor(_lowPower ? Graphics.COLOR_DK_GRAY : Graphics.COLOR_LT_GRAY, Graphics.COLOR_TRANSPARENT);
                 dc.drawLine(width * 25 / 100, lineY, width * 75 / 100, lineY);
@@ -266,9 +253,11 @@ class JagaGarmin1View extends WatchUi.View {
             var reachLocal = boardingTime - offsetMin * 60 + travelMin * 60 + nextOffsetMin * 60;
             var r = Gregorian.utcInfo(new Time.Moment(reachLocal), Time.FORMAT_SHORT);
             var dayDelta = reachLocal / 86400 - boardingTime / 86400;
-            reachText = "RCH " + Stops.clock12(r.hour, r.min);
-            if (dayDelta != 0) {
-                reachText += (dayDelta > 0 ? "+" : "") + dayDelta.format("%d");
+            if (travelMin > 0) {   // no RCH until a flight time is set
+                reachText = "RCH " + Stops.clock12(r.hour, r.min);
+                if (dayDelta != 0) {
+                    reachText += (dayDelta > 0 ? "+" : "") + dayDelta.format("%d");
+                }
             }
 
             if (passed) {
@@ -294,13 +283,14 @@ class JagaGarmin1View extends WatchUi.View {
             dc.setColor(labelColor, Graphics.COLOR_TRANSPARENT);
             dc.drawText(cx, y, labelFont, label, Graphics.TEXT_JUSTIFY_CENTER);
 
-            // Small aeroplane just left of the city name (right of the Flown ring): steady red while the flight
+            // Small aeroplane just left of the START / CH1 tag (clear of the Flown ring): steady red while the flight
             // has not been started, blinking green (on every other second) once it is under way
             if (legMin > 0) {
                 var started = legStartUtc != null;
                 if (!started || nowUtc % 2 == 0) {
-                    var planeS = labelH * 2 / 5;
-                    drawPlane(dc, cx - dc.getTextWidthInPixels(label, labelFont) / 2 - planeS - 6, y + labelH / 2,
+                    var tagH = dc.getFontHeight(tagFont);
+                    var planeS = tagH / 3;
+                    drawPlane(dc, cx - dc.getTextWidthInPixels(tag, tagFont) / 2 - planeS - 6, y - tagH / 2,
                         planeS, started ? Graphics.COLOR_GREEN : Graphics.COLOR_RED);
                 }
             }
@@ -346,7 +336,7 @@ class JagaGarmin1View extends WatchUi.View {
         if (isFocus && boardingText.length() > 0) {
             // Boarding (red) and reach (green) side by side, centred together
             var spacer = "  ";
-            var boardW = dc.getTextWidthInPixels(boardingText + spacer, labelFont);
+            var boardW = dc.getTextWidthInPixels(boardingText + (reachText.length() > 0 ? spacer : ""), labelFont);
             var reachW = dc.getTextWidthInPixels(reachText, labelFont);
             var left = cx - (boardW + reachW) / 2;
             dc.setColor(boardingColor, Graphics.COLOR_TRANSPARENT);

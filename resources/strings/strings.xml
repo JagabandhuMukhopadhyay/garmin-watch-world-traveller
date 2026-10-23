@@ -59,4 +59,8 @@
     <string id="TzP660">UTC+11:00 Sydney (summer), Noumea</string>
     <string id="TzP720">UTC+12:00 Auckland (winter), Fiji</string>
     <string id="TzP780">UTC+13:00 Auckland (summer), Tonga</string>
+    <string id="StartCodeTitle">Origin: airport ID (IATA, e.g. BLR)</string>
+    <string id="Change1CodeTitle">Change 1: airport ID (IATA, e.g. BLR)</string>
+    <string id="Change2CodeTitle">Change 2: airport ID (IATA, e.g. BLR)</string>
+    <string id="DestCodeTitle">Destination: airport ID (IATA, e.g. BLR)</string>
 </strings>

@@ -163,4 +163,16 @@
             <listEntry value="780">@Strings.TzP780</listEntry>
         </settingConfig>
     </setting>
+    <setting propertyKey="@Properties.StartCode" title="@Strings.StartCodeTitle">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+    <setting propertyKey="@Properties.Change1Code" title="@Strings.Change1CodeTitle">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+    <setting propertyKey="@Properties.Change2Code" title="@Strings.Change2CodeTitle">
+        <settingConfig type="alphaNumeric" />
+    </setting>
+    <setting propertyKey="@Properties.DestCode" title="@Strings.DestCodeTitle">
+        <settingConfig type="alphaNumeric" />
+    </setting>
 </settings>

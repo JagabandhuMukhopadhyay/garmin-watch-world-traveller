@@ -13,6 +13,7 @@ module Stops {
 
     // Index = slot. null = not applicable for that slot.
     const LABEL_KEYS = ["StartLabel", "Change1Label", "Change2Label", "DestLabel"];
+    const CODE_KEYS = ["StartCode", "Change1Code", "Change2Code", "DestCode"];   // 3-letter IATA airport ID
     const OFFSET_KEYS = [null, "Change1Offset", "Change2Offset", "DestOffset"];   // Origin follows the watch's time zone
     const BOARDING_KEYS = ["StartBoarding", "Change1Boarding", "Change2Boarding", null];
     const FLIGHT_KEYS = ["StartFlightMin", "Change1FlightMin", "Change2FlightMin", null];  // flight leaving this slot, minutes
@@ -71,6 +72,16 @@ module Stops {
         return getString(LABEL_KEYS[stop] as String, "");
     }
 
+    function code(stop as Number) as String {
+        return getString(CODE_KEYS[stop] as String, "");
+    }
+
+    // What the screen shows for a city: its IATA code ("BLR"), or the stored name while no code is set
+    function display(stop as Number) as String {
+        var c = code(stop);
+        return c.length() > 0 ? c : label(stop);
+    }
+
     // Offset of the stop's local time from UTC in minutes. Origin uses the watch's own zone (DST included).
     function offsetMin(stop as Number) as Number {
         var key = OFFSET_KEYS[stop];
@@ -119,6 +130,44 @@ module Stops {
         var b = Gregorian.utcInfo(new Time.Moment(localSecs), Time.FORMAT_SHORT);
         return Lang.format("$1$-$2$-$3$ $4$:$5$", [b.year, b.month.format("%02d"), b.day.format("%02d"),
             b.hour.format("%02d"), b.min.format("%02d")]);
+    }
+
+    // First run only: the default journey BLR > FRA > SFO with one plane change. BLR boards at 3:00 AM (next one from
+    // now, watch time) for an 8 h flight; FRA boards at 10:00 AM (first one after landing) for a 10 h flight.
+    // The user can change any of it afterwards.
+    function seedDefaults() as Void {
+        if (Application.Storage.getValue("DefaultsSeeded") != null) {
+            return;
+        }
+        Application.Properties.setValue("PlaneChanges", 1);
+        Application.Properties.setValue("FocusIndex", 0);
+        var names = ["Bengaluru", "Frankfurt", "", "San Francisco"];
+        var codes = ["BLR", "FRA", "", "SFO"];
+        for (var i = 0; i < COUNT; i++) {
+            Application.Properties.setValue(LABEL_KEYS[i] as String, names[i]);
+            Application.Properties.setValue(CODE_KEYS[i] as String, codes[i]);
+        }
+        Application.Properties.setValue("Change1Offset", 120);
+        Application.Properties.setValue("DestOffset", -420);
+        Application.Properties.setValue("StartFlightMin", 480);
+        Application.Properties.setValue("Change1FlightMin", 600);
+
+        // Origin: next 3:00 AM on the watch's clock
+        var originLocal = Time.now().value() + offsetMin(0) * 60;
+        var board0 = (originLocal / 86400) * 86400 + 3 * 3600;
+        if (board0 <= originLocal) {
+            board0 += 86400;
+        }
+        Application.Properties.setValue("StartBoarding", stringFromLocal(board0));
+
+        // Change 1: first 10:00 AM (Frankfurt time) after the flight from Origin lands
+        var landLocal = board0 - offsetMin(0) * 60 + 480 * 60 + offsetMin(1) * 60;
+        var board1 = (landLocal / 86400) * 86400 + 10 * 3600;
+        if (board1 <= landLocal) {
+            board1 += 86400;
+        }
+        Application.Properties.setValue("Change1Boarding", stringFromLocal(board1));
+        Application.Storage.setValue("DefaultsSeeded", 1);
     }
 
     function hour12(hour as Number) as Number {

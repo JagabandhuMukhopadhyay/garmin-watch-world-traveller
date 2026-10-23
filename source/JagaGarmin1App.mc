@@ -13,6 +13,7 @@ class JagaGarmin1App extends Application.AppBase {
 
     // onStart() is called on application start up
     function onStart(state as Dictionary?) as Void {
+        Stops.seedDefaults();
         Alarms.schedule();
     }
 
